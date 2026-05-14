@@ -1,0 +1,8 @@
+.env
+config/odoo.conf
+*.pyc
+__pycache__/
+.pytest_cache/
+.DS_Store
+filestore/
+sessions/

@@ -1,0 +1,15 @@
+[options]
+addons_path = /mnt/extra-addons
+data_dir = /var/lib/odoo
+admin_passwd = __ODOO_ADMIN_PASSWORD__
+db_host = db
+db_port = 5432
+db_user = __POSTGRES_USER__
+db_password = __POSTGRES_PASSWORD__
+proxy_mode = True
+list_db = False
+without_demo = all
+workers = 0
+max_cron_threads = 1
+limit_memory_hard = 2684354560
+limit_memory_soft = 2147483648
