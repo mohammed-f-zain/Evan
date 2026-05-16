@@ -99,6 +99,10 @@ rm -f /etc/nginx/sites-enabled/default
 nginx -t
 systemctl reload nginx
 
+if certbot certificates 2>/dev/null | grep -q "evanwater.online"; then
+  certbot install --cert-name evanwater.online --nginx --redirect --non-interactive || true
+fi
+
 if ! certbot certificates 2>/dev/null | grep -q "evanwater.online"; then
   if ! certbot --nginx -d evanwater.online -d www.evanwater.online --non-interactive --agree-tos --email "admin@evanwater.online" --redirect; then
     echo "Certbot failed (often DNS/CAA or propagation). HTTP still works; fix DNS then run on server:" >&2
