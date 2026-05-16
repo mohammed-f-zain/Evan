@@ -1,6 +1,6 @@
 # Evan — Odoo 18 Community monorepo
 
-Dockerized **Odoo 18.0** with **PostgreSQL 16**, custom addons under `addons/custom/` (`base_account_budget`, **base_accounting_kit**), and deployment assets for **evanwater.online**.
+Dockerized **Odoo 18.0** with **PostgreSQL 16**, custom addons under `addons/custom/` (`base_account_budget`, **base_accounting_kit**, **custom_account_reports_enterprise**), and deployment assets for **evanwater.online**.
 
 ## Local / server layout
 
@@ -16,6 +16,9 @@ Dockerized **Odoo 18.0** with **PostgreSQL 16**, custom addons under `addons/cus
 2. `bash scripts/render-config.sh`
 3. `docker compose build --pull && docker compose up -d`
 4. Create/init DB **Evan** (if not already): `bash scripts/init-evan-db.sh`
+5. On an existing DB, install/upgrade addons: `bash scripts/upgrade-modules.sh custom_account_reports_enterprise`
+
+Local URL (default when port 8069 is busy): **http://127.0.0.1:8079** — set `ODOO_HTTP_PORT` in `.env`.
 
 ## Deploy to the VPS
 

@@ -8,6 +8,7 @@ db_user = __POSTGRES_USER__
 db_password = __POSTGRES_PASSWORD__
 proxy_mode = True
 list_db = False
+dbfilter = ^Evan$
 without_demo = all
 workers = 0
 max_cron_threads = 1

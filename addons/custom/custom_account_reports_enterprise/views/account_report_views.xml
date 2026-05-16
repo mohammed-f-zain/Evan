@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Minimal views to open existing `account_report` records safely -->
+    <record id="view_account_report_tree_enterprise" model="ir.ui.view">
+        <field name="name">account.report.tree.enterprise</field>
+        <field name="model">account.report</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+                <field name="chart_template"/>
+                <field name="root_report_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_report_form_enterprise" model="ir.ui.view">
+        <field name="name">account.report.form.enterprise</field>
+        <field name="model">account.report</field>
+        <field name="arch" type="xml">
+            <form string="Accounting Report">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                        <field name="root_report_id"/>
+                        <field name="chart_template"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_report_search_enterprise" model="ir.ui.view">
+        <field name="name">account.report.search.enterprise</field>
+        <field name="model">account.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter string="Active" name="active" domain="[('active','=',True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_account_report_kanban_enterprise" model="ir.ui.view">
+        <field name="name">account.report.kanban.enterprise</field>
+        <field name="model">account.report</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="o_kanban_record oe_kanban_global_click">
+                            <div class="o_kanban_record_title">
+                                <field name="name"/>
+                            </div>
+                            <div class="text-muted">
+                                <field name="active" widget="boolean_toggle"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+</odoo>
+

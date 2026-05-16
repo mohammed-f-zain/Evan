@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root menu under Accounting -->
+    <menuitem
+        id="menu_enterprise_account_reports_root"
+        name="Enterprise Accounting Reports"
+        parent="account.menu_finance_entries"
+        sequence="80"
+    />
+
+    <!-- Open each existing root report record by id -->
+    <record id="action_account_report_profit_and_loss" model="ir.actions.act_window">
+        <field name="name">Profit and Loss</field>
+        <field name="res_model">account.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_account_report_form_enterprise"/>
+        <field name="target">current</field>
+        <field name="res_id" eval="7"/>
+    </record>
+
+    <menuitem
+        id="menu_enterprise_account_reports_profit_and_loss"
+        name="Profit and Loss"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_report_profit_loss_ui"
+        sequence="10"
+    />
+
+    <record id="action_enterprise_account_reports_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">custom.enterprise.account.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_enterprise_report_wizard_form"/>
+        <field name="target">current</field>
+        <field name="context">{'default_report_type': 'executive_summary'}</field>
+    </record>
+
+    <menuitem
+        id="menu_enterprise_account_reports_dashboard"
+        name="Dashboard"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_account_reports_dashboard"
+        sequence="5"
+    />
+
+    <record id="action_account_report_balance_sheet" model="ir.actions.act_window">
+        <field name="name">Balance Sheet</field>
+        <field name="res_model">account.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_account_report_form_enterprise"/>
+        <field name="target">current</field>
+        <field name="res_id" eval="4"/>
+    </record>
+
+    <menuitem
+        id="menu_enterprise_account_reports_balance_sheet"
+        name="Balance Sheet"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_report_balance_sheet_ui"
+        sequence="20"
+    />
+
+    <record id="action_account_report_cash_flow_statement" model="ir.actions.act_window">
+        <field name="name">Cash Flow Statement</field>
+        <field name="res_model">account.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_account_report_form_enterprise"/>
+        <field name="target">current</field>
+        <field name="res_id" eval="5"/>
+    </record>
+
+    <menuitem
+        id="menu_enterprise_account_reports_cash_flow_statement"
+        name="Cash Flow Statement"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_report_cash_flow_ui"
+        sequence="30"
+    />
+
+    <record id="action_account_report_trial_balance" model="ir.actions.act_window">
+        <field name="name">Trial Balance</field>
+        <field name="res_model">account.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_account_report_form_enterprise"/>
+        <field name="target">current</field>
+        <field name="res_id" eval="12"/>
+    </record>
+
+    <menuitem
+        id="menu_enterprise_account_reports_trial_balance"
+        name="Trial Balance"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_report_trial_balance_ui"
+        sequence="40"
+    />
+
+    <menuitem
+        id="menu_enterprise_account_reports_executive_summary"
+        name="Executive Summary"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_report_executive_summary_ui"
+        sequence="50"
+    />
+
+    <menuitem
+        id="menu_enterprise_account_reports_tax_return"
+        name="Tax Return"
+        parent="menu_enterprise_account_reports_root"
+        action="base_accounting_kit.action_account_tax_report"
+        sequence="60"
+    />
+
+    <record id="action_enterprise_deferred_expense_report" model="ir.actions.act_window">
+        <field name="name">Deferred Expense</field>
+        <field name="res_model">asset.asset.report</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="search_view_id" ref="base_accounting_kit.asset_asset_report_view_search"/>
+        <field name="domain">[('asset_category_id.type', '=', 'purchase')]</field>
+        <field name="context">{'search_default_only_active': 1}</field>
+    </record>
+
+    <menuitem
+        id="menu_enterprise_account_reports_deferred_expense"
+        name="Deferred Expense"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_deferred_expense_report"
+        sequence="70"
+    />
+
+    <record id="action_enterprise_deferred_revenue_report" model="ir.actions.act_window">
+        <field name="name">Deferred Revenue</field>
+        <field name="res_model">asset.asset.report</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="search_view_id" ref="base_accounting_kit.asset_asset_report_view_search"/>
+        <field name="domain">[('asset_category_id.type', '=', 'sale')]</field>
+        <field name="context">{'search_default_only_active': 1}</field>
+    </record>
+
+    <menuitem
+        id="menu_enterprise_account_reports_deferred_revenue"
+        name="Deferred Revenue"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_deferred_revenue_report"
+        sequence="80"
+    />
+
+    <menuitem
+        id="menu_enterprise_account_reports_depreciation_schedule"
+        name="Depreciation Schedule"
+        parent="menu_enterprise_account_reports_root"
+        action="base_accounting_kit.action_asset_asset_report"
+        sequence="90"
+    />
+
+    <menuitem
+        id="menu_enterprise_account_reports_disallowed_expense"
+        name="Disallowed Expense"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_report_disallowed_expense_ui"
+        sequence="100"
+    />
+
+    <menuitem
+        id="menu_enterprise_account_reports_budget_report"
+        name="Budget Report"
+        parent="menu_enterprise_account_reports_root"
+        action="base_account_budget.act_budget_lines_view"
+        sequence="110"
+    />
+
+    <menuitem
+        id="menu_enterprise_account_reports_loans_analysis"
+        name="Loans Analysis"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_report_loans_analysis_ui"
+        sequence="120"
+    />
+
+    <menuitem
+        id="menu_enterprise_account_reports_product_margins"
+        name="Product Margins"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_report_product_margins_ui"
+        sequence="130"
+    />
+
+    <record id="action_enterprise_aged_receivable" model="ir.actions.act_window">
+        <field name="name">Aged Receivable</field>
+        <field name="res_model">account.aged.trial.balance</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="base_accounting_kit.account_aged_trial_balance_view_form"/>
+        <field name="target">new</field>
+        <field name="context">{'default_result_selection': 'customer'}</field>
+    </record>
+
+    <menuitem
+        id="menu_enterprise_account_reports_aged_receivable"
+        name="Aged Receivable"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_aged_receivable"
+        sequence="140"
+    />
+
+    <record id="action_enterprise_aged_payable" model="ir.actions.act_window">
+        <field name="name">Aged Payable</field>
+        <field name="res_model">account.aged.trial.balance</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="base_accounting_kit.account_aged_trial_balance_view_form"/>
+        <field name="target">new</field>
+        <field name="context">{'default_result_selection': 'supplier'}</field>
+    </record>
+
+    <menuitem
+        id="menu_enterprise_account_reports_aged_payable"
+        name="Aged Payable"
+        parent="menu_enterprise_account_reports_root"
+        action="action_enterprise_aged_payable"
+        sequence="150"
+    />
+
+</odoo>
+

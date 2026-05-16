@@ -25,6 +25,7 @@ if [[ ! -f "$APP_DIR/.env" ]]; then
 POSTGRES_USER=odoo
 POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 ODOO_ADMIN_PASSWORD=${ODOO_ADMIN_PASSWORD}
+ODOO_HTTP_PORT=8079
 EOF
   umask 077
   {
@@ -35,10 +36,15 @@ EOF
   echo "Created $APP_DIR/.env and /root/evan-odoo.credentials"
 fi
 
+if [[ -f "$APP_DIR/.env" ]] && ! grep -q '^ODOO_HTTP_PORT=' "$APP_DIR/.env"; then
+  echo 'ODOO_HTTP_PORT=8079' >>"$APP_DIR/.env"
+fi
+
 set -a
 # shellcheck disable=SC1091
 source "$APP_DIR/.env"
 set +a
+export ODOO_HTTP_PORT="${ODOO_HTTP_PORT:-8079}"
 
 bash "$APP_DIR/scripts/render-config.sh"
 docker compose build --pull
@@ -67,12 +73,26 @@ fi
 if [[ "$NEEDS_INIT" -eq 1 ]]; then
   docker compose run --rm odoo odoo \
     -d Evan \
-    -i base,base_accounting_kit \
+    -i base,base_accounting_kit,custom_account_reports_enterprise \
     --stop-after-init \
     --without-demo=all
 fi
 
 docker compose up -d
+
+REPORTS_INSTALLED=0
+if docker compose exec -T db psql -U "${POSTGRES_USER:-odoo}" -d Evan -tAc \
+  "SELECT 1 FROM ir_module_module WHERE name='custom_account_reports_enterprise' AND state='installed'" \
+  | grep -q 1; then
+  REPORTS_INSTALLED=1
+fi
+if [[ "$REPORTS_INSTALLED" -eq 0 && "$EVAN_EXISTS" -eq 1 ]]; then
+  docker compose run --rm odoo odoo \
+    -d Evan \
+    -i custom_account_reports_enterprise \
+    --stop-after-init
+  docker compose up -d
+fi
 
 install -m 644 "$APP_DIR/deploy/nginx/odoo-evanwater.conf" /etc/nginx/sites-available/odoo-evanwater.conf
 ln -sf /etc/nginx/sites-available/odoo-evanwater.conf /etc/nginx/sites-enabled/odoo-evanwater.conf
