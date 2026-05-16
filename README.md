@@ -18,7 +18,7 @@ Dockerized **Odoo 18.0** with **PostgreSQL 16**, custom addons under `addons/cus
 4. Create/init DB **Evan** (if not already): `bash scripts/init-evan-db.sh`
 5. On an existing DB, install/upgrade addons: `bash scripts/upgrade-modules.sh custom_account_reports_enterprise`
 
-Local URL (default when port 8069 is busy): **http://127.0.0.1:8079** — set `ODOO_HTTP_PORT` in `.env`.
+Production and server use **port 8069** (localhost). For local dev only, if 8069 is busy, set `ODOO_HTTP_PORT=8079` in `.env`.
 
 ## Deploy to the VPS
 

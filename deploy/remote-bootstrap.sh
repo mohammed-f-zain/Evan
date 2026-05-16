@@ -25,7 +25,6 @@ if [[ ! -f "$APP_DIR/.env" ]]; then
 POSTGRES_USER=odoo
 POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 ODOO_ADMIN_PASSWORD=${ODOO_ADMIN_PASSWORD}
-ODOO_HTTP_PORT=8079
 EOF
   umask 077
   {
@@ -36,15 +35,15 @@ EOF
   echo "Created $APP_DIR/.env and /root/evan-odoo.credentials"
 fi
 
-if [[ -f "$APP_DIR/.env" ]] && ! grep -q '^ODOO_HTTP_PORT=' "$APP_DIR/.env"; then
-  echo 'ODOO_HTTP_PORT=8079' >>"$APP_DIR/.env"
+# Production uses default port 8069 on localhost (see docker-compose.yml).
+if [[ -f "$APP_DIR/.env" ]]; then
+  sed -i '/^ODOO_HTTP_PORT=/d' "$APP_DIR/.env"
 fi
 
 set -a
 # shellcheck disable=SC1091
 source "$APP_DIR/.env"
 set +a
-export ODOO_HTTP_PORT="${ODOO_HTTP_PORT:-8079}"
 
 bash "$APP_DIR/scripts/render-config.sh"
 docker compose build --pull
